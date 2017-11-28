@@ -92,8 +92,8 @@ class Options(dict):
                  'skip-download',
                  'skip-extraction',
                  'threads=',
-                 'read-length=',
-                 'read-length-sd=',
+                 'fragment-length=',
+                 'fragment-length-sd=',
                  'remove-sra',
                  'samtools-filtering=',
                  'samtools-indexing',
@@ -124,10 +124,10 @@ class Options(dict):
                 self['threads'] = int(a)
             elif o == '--kallisto':
                 self['kallisto'] = a
-            elif o == '--read-length':
-                self['read_length'] = int(a)
-            elif o == '--read-length-sd':
-                self['read_length_sd'] = int(a)
+            elif o == '--fragment-length':
+                self['fragment_length'] = int(a)
+            elif o == '--fragment-length-sd':
+                self['fragment_length_sd'] = int(a)
             elif o == '--remove-sra':
                 self['remove_sra'] = True
             elif o == '--samtools-filtering':
@@ -160,8 +160,8 @@ class Options(dict):
         self['skip_download'] = False
         self['skip_extraction'] = False
         self['single'] = False
-        self['read_length'] = None
-        self['read_length_sd'] = None
+        self['fragment_length'] = None
+        self['fragment_length_sd'] = None
         self['remove_sra'] = False
         self["samtools_filtering"] = None
         self["samtools_indexing"] = False
@@ -284,8 +284,8 @@ def main(argv=sys.argv):
                  prefix=sample, mode=mode,
                  threads=options["threads"],
                  bootstrap=options["bootstrap"], 
-                 read_length=options["read_length"],
-                 read_length_sd=options["read_length_sd"],
+                 fragment_length=options["fragment_length"],
+                 fragment_length_sd=options["fragment_length_sd"],
                  orientation=options["orientation"],
                  log_file=sys.stdout)
         

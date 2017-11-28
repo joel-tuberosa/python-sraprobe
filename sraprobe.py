@@ -5,15 +5,14 @@ Tools to import sequence read data from NCBI's Sequence Read Archive
 repository.
 '''
 
+### MODULES
 import subprocess, fileinput, sys, os, getopt, urllib2, socket, shutil, gzip, 
 from tempfile import TemporaryFile
 from contextlib import closing
 from StringIO import StringIO
 __doc__ = __doc__.format(os.path.split(sys.argv[0])[1])
 
-
 ### CLASSES
-
 class SRAError(Exception):
     pass
 
@@ -346,8 +345,8 @@ class Kallisto(_Options, _Mapping):
               "threads": 1,
               "bootstrap": 0,
               "prefix": None,
-              "read_lenght": None,
-              "read_length_sd": None,
+              "fragment_length": None,
+              "fragment_length_sd": None,
               "orientation": None
             }
         self.__dict__.update(self.defaults)    
@@ -358,12 +357,12 @@ class Kallisto(_Options, _Mapping):
         if self.mode == "single-end":
             if self.read_lenght is None:
                 raise ValueError(
-                    "You must define read_length if mode is 'single-end'")
-            if self.read_length_sd is None:
+                    "You must define fragment_length if mode is 'single-end'")
+            if self.fragment_length_sd is None:
                 raise ValueError(
-                    "You must define read_length_sd if mode is 'single-end'")
+                    "You must define fragment_length_sd if mode is 'single-end'")
             args.extend(["--single", "-l", self.read_lenght, 
-                         "-s", self.read_length_sd])
+                         "-s", self.fragment_length_sd])
         if self.orientation is not None:
             if self.orientation == "rf":
                 args.append("--rf-stranded")
@@ -430,7 +429,7 @@ def dump_sra(accessions, clip=True, gzip=True, skip_technical=False,
     return sra.extracted
     
 def kallisto_mapping(sequences, index, prefix, mode="single-end", threads=1, 
-                     bootstrap=0, read_length=None, read_length_sd=None,
+                     bootstrap=0, fragment_length=None, fragment_length_sd=None,
                      orientation=None, log_file=None):
     '''
     Map each fastq file of the list 'sequences' on a the given 'index' 
@@ -447,7 +446,7 @@ def kallisto_mapping(sequences, index, prefix, mode="single-end", threads=1,
     # Build the Kallisto object
     kallisto = Kallisto(*sequences, index=index, prefix=prefix, mode=mode, 
                         threads=threads, bootstrap=bootstrap, 
-                        read_lenght=read_length, read_length_sd=read_length_sd,
+                        read_lenght=fragment_length, fragment_length_sd=fragment_length_sd,
                         orientation=orientation)
                         
     # Map the sequences, return the output name if everything went ok
@@ -541,5 +540,3 @@ def count_processed_reads(sam):
     '''
     
     return sam_count(sam, filter_flag=256)
-
-    
