@@ -24,11 +24,11 @@ OPTIONS
     --kallisto=INDEX
         Map reads with kallisto using the INDEX file.     
     
-    --read-length=INT
-        Average read length (if you use kallisto in single end mode)
+    --fragment-length=INT
+        Average fragment length (if you use kallisto in single end mode)
     
-    --read-length-sd=INT
-        Standard deviation of read length (if you use kallisto in single end 
+    --fragment-length-sd=INT
+        Standard deviation of fragment length (if you use kallisto in single end 
         mode)
     
     --remove-sra
@@ -44,7 +44,7 @@ OPTIONS
     
     --single
         Reads are processed as single-end. If using kallisto, you must provide
-        values for '--read-length' and '--read-length-sd' options.
+        values for '--fragment-length' and '--fragment-length-sd' options.
     
     --skip-download
         Assume SRA files are already in the current working directory.
