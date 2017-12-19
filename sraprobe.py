@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 '''
 SRA Probe
 
@@ -6,7 +8,7 @@ repository.
 '''
 
 ### MODULES
-import subprocess, fileinput, sys, os, getopt, urllib2, socket, shutil, gzip, 
+import subprocess, fileinput, sys, os, getopt, urllib2, socket, shutil, gzip 
 from tempfile import TemporaryFile
 from contextlib import closing
 from StringIO import StringIO
