@@ -186,16 +186,18 @@ def get_input():
             except ValueError:
                 if i > 1:
                     raise ValueError(
-                        "Inconsistent input: two elements expected per" +
+                        "Inconsistent input: two elements expected per"
                         " line, only one found at line #{}".format(i))
                 sample = line.strip()
                 samples = [sample]
                 input_mode = 1
+                i += 1
                 continue
             try: samples[sample].append(run)
             except KeyError: samples[sample] = [run]
         else:
             samples.append(line.strip())
+        i += 1
     return samples
 
 def get_fastq_file_name(x, single=True, gzip=False):
