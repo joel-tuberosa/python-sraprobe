@@ -6,8 +6,8 @@ USAGE
 
 DESCRIPTION
     Import sequences from SRA repository and map with bowtie2 or/and kallisto.
-    The input is either a table listing sample names in the first column and 
-    corresponding run accessions in second column, or a one column list with
+    The input is either a TSV table listing sample names in the first column  
+    and corresponding run accessions in second column, or a one column list with
     all the run to map independently. In the first case, the output files will
     take the name of the sample, whereas in the second cas, it will take the
     name of the run accession. You can alternatively use this script to map
@@ -182,19 +182,21 @@ def get_input():
     samples = {}
     for line in fileinput.input():
         if input_mode == 0:
-            try: sample, run = line.split()
+            try: sample, run = line.split("\t")
             except ValueError:
                 if i > 1:
+                    field_n = line.count("\t") + 1
                     raise ValueError(
                         "Inconsistent input: two elements expected per"
-                        " line, only one found at line #{}".format(i))
+                        " line, {} TAB separated fields found at line"
+                        " #{}".format(field_n, i))
                 sample = line.strip()
                 samples = [sample]
                 input_mode = 1
                 i += 1
                 continue
-            try: samples[sample].append(run)
-            except KeyError: samples[sample] = [run]
+            try: samples[sample].append(run.strip())
+            except KeyError: samples[sample] = [run.strip()]
         else:
             samples.append(line.strip())
         i += 1
