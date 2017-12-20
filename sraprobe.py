@@ -357,13 +357,13 @@ class Kallisto(_Options, _Mapping):
         args = ["kallisto", "quant", "-i", self.index, "-o", self.prefix + 
                 "-kallisto_output"] + self.sequences
         if self.mode == "single-end":
-            if self.read_lenght is None:
+            if self.fragment_length is None:
                 raise ValueError(
                     "You must define fragment_length if mode is 'single-end'")
             if self.fragment_length_sd is None:
                 raise ValueError(
                     "You must define fragment_length_sd if mode is 'single-end'")
-            args.extend(["--single", "-l", self.read_lenght, 
+            args.extend(["--single", "-l", self.fragment_length, 
                          "-s", self.fragment_length_sd])
         if self.orientation is not None:
             if self.orientation == "rf":
@@ -448,7 +448,7 @@ def kallisto_mapping(sequences, index, prefix, mode="single-end", threads=1,
     # Build the Kallisto object
     kallisto = Kallisto(*sequences, index=index, prefix=prefix, mode=mode, 
                         threads=threads, bootstrap=bootstrap, 
-                        read_lenght=fragment_length, fragment_length_sd=fragment_length_sd,
+                        fragment_length=fragment_length, fragment_length_sd=fragment_length_sd,
                         orientation=orientation)
                         
     # Map the sequences, return the output name if everything went ok
