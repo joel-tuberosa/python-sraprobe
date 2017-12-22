@@ -204,7 +204,7 @@ class Bowtie2RunLog(_Log):
             self.uniquely_aligned_reads = int(line.split()[0])
         elif line.endswith(">1 times"):
             self.aligned_reads = (self.uniquely_aligned_reads + 
-                                  int(line.split()[0]))        
+                                  int(line.split()[0]))                                  
     
 class Bowtie2(_Options, _Mapping):
     '''
@@ -232,7 +232,7 @@ class Bowtie2(_Options, _Mapping):
         if self.threads > 1:
             args.extend(["-p", self.threads])
         if self.mode == "single-end":
-            args.extend(["-U"] + self.sequences)
+            args.extend(["-U", ",".join(self.sequences)])
         elif self.mode == "paired-end":
             left_reads = [ x for x in self.sequences 
                            if x.split(".")[0].endswith("_1") ]
@@ -297,6 +297,9 @@ class Bowtie2(_Options, _Mapping):
         
         # store log info
         self.log = Bowtie2RunLog(log)
+        if "Error" in self.log.raw: 
+            raise Bowtie2Error("Bowtie2 exited with the following error:\n" +
+                               self.log.raw)
 
 class KallistoRunLog(_Log):
     '''
