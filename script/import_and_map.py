@@ -210,11 +210,11 @@ def get_fastq_file_name(x, single=True, gzip=False):
     
     if single:
         x += ".fastq"
-        if gzip: x += ".gzip"
+        if gzip: x += ".gz"
         return x
     else:
         x, y = x + "_1.fastq", x + "_2.fastq"
-        if gzip: x, y = x + ".gzip", y + ".gzip"
+        if gzip: x, y = x + ".gz", y + ".gz"
         return x, y
 
 def wrap_fastq_names(runs, single=True, gzip=False):
