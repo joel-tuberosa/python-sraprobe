@@ -9,7 +9,7 @@ DESCRIPTION
     The input is either a TSV table listing sample names in the first column  
     and corresponding run accessions in second column, or a one column list with
     all the run to map independently. In the first case, the output files will
-    take the name of the sample, whereas in the second cas, it will take the
+    take the name of the sample, whereas in the second case, it will take the
     name of the run accession. You can alternatively use this script to map
     any fastq files skipping the import and the sra file extraction.
 
