@@ -252,7 +252,7 @@ class Bowtie2(_Options, _Mapping):
         return map(str, args)
     
     def get_sort_args(self):
-        args = ["samtools", "sort", "-", self.prefix + ".sorted"]
+        args = ["samtools", "sort", "-", "-o", self.prefix + ".sorted.bam"]
         return args
         
     def get_index_args(self):
